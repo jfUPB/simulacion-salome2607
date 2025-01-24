@@ -89,9 +89,9 @@ function mousePressed() {
 
 **Captura del contenido generado.**
 
-![image](https://github.com/user-attachments/assets/594fa4aa-1cba-43c1-b1b3-b88b14000486)
+![Foto](../../../../assets/unidad1/act8-1.png)
 
-![image](https://github.com/user-attachments/assets/6c818a44-6ad4-4361-9e84-7eefef33432d)
+![Foto](../../../../assets/unidad1/act8-2.png)
 
 **En caso de realizar alguna variación al concepto original, escribe un texto donde expliques la razón del cambio.**
 
