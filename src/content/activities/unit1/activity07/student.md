@@ -7,7 +7,7 @@ El de la izquierda la linea que produce es mas organizada y seguida, porque los 
 utilice el ruido Perlin para crear variaciones suaves en el movimiento de puntos en el canvas. El ruido genera unos valores que se transforman gradualmente, para que los cambios no sean bruscos. De esta manera, los movimientos de los puntos son más naturales y suaves, creando unas lineas que no cambian locamente. 
 **El código.**
 
-´´´
+```
 let xoff = 0; // Desplazamiento en el eje X para el ruido Perlin
 let yoff = 1000; // Desplazamiento en el eje Y para el ruido Perlin
 
@@ -27,11 +27,11 @@ function draw() {
   xoff += 0.01;
   yoff += 0.01;
 }
-´´´
+```
 
 lo modifique para que los circulos cambien de color 
 
-´´´
+```
 let xoff = 0; // Desplazamiento en el eje X para el ruido Perlin
 let yoff = 1000; // Desplazamiento en el eje Y para el ruido Perlin
 let colorsito = 10;
@@ -61,6 +61,8 @@ function draw() {
   yoff += 0.01;
   
 }
-´´´
+```
 
 **Una captura de pantalla que muestre la visualización generada.**
+
+
