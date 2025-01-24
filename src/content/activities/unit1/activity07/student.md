@@ -65,4 +65,4 @@ function draw() {
 
 **Una captura de pantalla que muestre la visualización generada.**
 
-
+![Foto](../../../../assets/unidad1/act7.png)
