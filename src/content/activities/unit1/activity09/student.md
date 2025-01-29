@@ -1,6 +1,6 @@
 **Código de la aplicación.**
 
-```
+``` js
 let xoff = 0; // Desplazamiento para el ruido Perlin (movimiento en X)
 let yoff = 1000; // Desplazamiento para el ruido Perlin (movimiento en Y)
 
@@ -35,7 +35,7 @@ function draw() {
 
 le cambie para que cuando hiciera clic izquierdo el circulo se convirtiera en un cuadrado y viceversa. 
 
-```
+``` js
 let xoff = 0; // Desplazamiento para el ruido Perlin (movimiento en X)
 let yoff = 1000; // Desplazamiento para el ruido Perlin (movimiento en Y)
 let shapeType = 'circle'; // Variable para controlar la figura a dibujar
