@@ -37,7 +37,7 @@ function draw() {
 
 me dice los valores antes y despues de la funcion playing vector
 
-![{40170F37-B5B6-46E2-93D2-3E4FA1ECBBBB}](https://github.com/user-attachments/assets/c16aa35a-c856-4f7e-a5b1-bc3b0478b128)
+![Foto](../../../../assets/unidad2/foto2.png)
 
 
 **Recuerda los conceptos de paso por valor y paso por referencia en programación. Muestra ejemplos de este concepto en javascript.**
