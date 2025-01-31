@@ -75,5 +75,5 @@ class Walker {
 
 y se ve asi:
 
-![{55418203-7C52-409E-A50F-D3856A6694A5}](https://github.com/user-attachments/assets/c6cd048a-dc32-463d-b499-a439a0fe5676)
+![Foto](../../../../assets/unidad2/foto1.png)
 
