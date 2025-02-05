@@ -86,6 +86,6 @@ function mousePressed() {
 
 **Captura del contenido generado.**
 
-![Foto](../../../../assets/unidad2/foto6.png)
+![Foto](../../../../assets/unidad2/videoUni2.gif)
 
 **En caso de realizar alguna variación al concepto original, escribe un texto donde expliques la razón del cambio.**
