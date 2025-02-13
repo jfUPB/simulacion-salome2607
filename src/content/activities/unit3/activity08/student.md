@@ -1,6 +1,6 @@
 **un texto donde expliques la diferencia entre paso por valor y paso por referencia. ¿Qué implica esto en el fragmento de código?**
 
-Paso por valor significa que cuando se pasa una variable a una función (o se asigna a otra variable), se pasa una copia del valor original. Cualquier modificación realizada a esa copia no afecta a la variable original.
+Paso por valor significa que cuando se pasa una variable a una función, se pasa una copia del valor original. Cualquier modificación realizada a esa copia no afecta a la variable original.
 
 Paso por referencia significa que en lugar de pasar una copia del valor, se pasa una referencia o un enlace directo al valor original. Cualquier cambio hecho a la referencia afecta al valor original, ya que ambos apuntan al mismo lugar en la memoria.
 
