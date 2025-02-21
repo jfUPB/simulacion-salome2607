@@ -268,3 +268,106 @@ link -> https://editor.p5js.org/salome2607/full/LIrOMwCJx
 
  - Atracción gravitacional:
 
+Mi experimento consiste en que hay tres bolitas estáticas de diferentes colores (roja, verde y azul) que actúan como "atractores". Y Hay una bolita gris que flota libremente y es afectada por la gravedad. Si le doy clic a una bolita de color se activa su campo gravitacional y atrae a la bolita gris. 
+
+```js
+let mover;
+let attractors = [];
+let currentTarget = null;
+
+function setup() {
+  createCanvas(640, 360);
+  // Crear las tres bolitas estáticas de colores
+  attractors.push(new Attractor(150, height / 2, 20, color(255, 0, 0))); // Roja
+  attractors.push(new Attractor(320, height / 2, 20, color(0, 255, 0))); // Verde
+  attractors.push(new Attractor(490, height / 2, 20, color(0, 0, 255))); // Azul
+  // Crear la bolita que flota
+  mover = new Mover(width / 2, 50, 10);
+}
+
+function draw() {
+  background(255);
+  // Mostrar las bolitas estáticas
+  for (let i = 0; i < attractors.length; i++) {
+    attractors[i].show();
+  }
+  // Si hay una bolita seleccionada, calcular la atracción hacia esa bolita
+  if (currentTarget) {
+    let force = currentTarget.calculateAttraction(mover);
+    mover.applyForce(force);
+  }
+  // Actualizar y mostrar la bolita flotante
+  mover.update();
+  mover.show();
+}
+
+function mousePressed() {
+  for (let i = 0; i < attractors.length; i++) {
+    if (attractors[i].isClicked(mouseX, mouseY)) {
+      currentTarget = attractors[i];
+    }
+  }
+}
+
+class Attractor {
+  constructor(x, y, m, c) {
+    this.position = createVector(x, y);
+    this.mass = m;
+    this.color = c;
+    this.radius = this.mass * 2;
+  }
+
+  show() {
+    noStroke();
+    fill(this.color);
+    ellipse(this.position.x, this.position.y, this.radius * 2);
+  }
+
+  calculateAttraction(mover) {
+    let G = 5; // Aumentado de 1 a 5 para mayor atracción
+    let force = p5.Vector.sub(this.position, mover.position);
+    let distance = constrain(force.mag(), 5, 15); // Reducido el rango máximo de 25 a 15
+    force.normalize();
+    let strength = (G * this.mass * mover.mass) / (distance * distance);
+    force.mult(strength);
+    return force;
+  }
+
+  isClicked(px, py) {
+    let d = dist(px, py, this.position.x, this.position.y);
+    return d < this.radius;
+  }
+}
+
+class Mover {
+  constructor(x, y, m) {
+    this.position = createVector(x, y);
+    this.velocity = createVector(0, 0);
+    this.acceleration = createVector(0, 0);
+    this.mass = m;
+    this.radius = this.mass * 2;
+  }
+
+  applyForce(force) {
+    let f = p5.Vector.div(force, this.mass);
+    this.acceleration.add(f);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    // Añadir amortiguación a la velocidad
+    this.velocity.mult(0.99);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(127);
+    ellipse(this.position.x, this.position.y, this.radius * 2);
+  }
+}
+```
+
+link -> https://editor.p5js.org/salome2607/full/y7NHrpU-i 
