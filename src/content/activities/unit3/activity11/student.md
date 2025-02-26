@@ -2,7 +2,7 @@
 
 **El código de tu simulación**
 
-```
+```js
 let systems = []; // Lista de sistemas solares
 
 function setup() {
