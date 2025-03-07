@@ -42,6 +42,8 @@ Esto permite hacer transformaciones (como traslaciones y rotaciones) de forma ai
 
 La función rectMode(CENTER) cambia el modo en el que se dibuja un rectángulo. De forma predeterminada, los rectángulos se dibujan desde la esquina superior izquierda usando las coordenadas (x, y) como referencia. Con rectMode(CENTER), el rectángulo se dibuja usando su centro como el punto de referencia para (x, y).
 
+El experimento que hice fue cambiar el CENTER por CORNER, con este cambio se cambia el punto de referencia para dibujar el rectangulo. esto hace que el rectángulo se dibuje desde su esquina superior izquierda. Esto significa que, aunque el objeto se traslada y rota, el punto que se mueve es la esquina del rectángulo, lo que cambia visualmente la posición y el comportamiento en pantalla. hace que se mueva diferente.
+
 **¿Cuál es la relación entre el ángulo de rotación y el vector de velocidad? Trata de dibujar en un papel el vector de velocidad y cómo se relaciona con el ángulo de rotación y la operación de traslación y rotación.**
 
 El ángulo de rotación está directamente relacionado con la dirección del vector de velocidad. El vector de velocidad indica hacia dónde se mueve el objeto, y heading() calcula el ángulo que forma ese vector con respecto al eje X. Luego, rotate(angle) usa ese ángulo para rotar el objeto, de manera que apunte hacia la dirección del movimiento.
