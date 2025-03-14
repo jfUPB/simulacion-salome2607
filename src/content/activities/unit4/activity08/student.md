@@ -4,7 +4,7 @@
 
 **Código de la simulación.**
 
-```
+```js
 let angle = 0;
 let angleVelocity = 0.2; // Velocidad angular
 let amplitude = 100;     // Amplitud de la onda
