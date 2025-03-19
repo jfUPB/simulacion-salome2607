@@ -108,4 +108,3 @@ class Wave {
 
 **Una captura de pantalla con una imagen de tu obra.**
 
-![Foto](../../../../assets/uni4/act11.gif)
