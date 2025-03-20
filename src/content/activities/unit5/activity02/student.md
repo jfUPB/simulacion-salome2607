@@ -231,34 +231,421 @@ class Emitter {
 ### **Simulacion #3**
 **- ¿Cómo se está gestionando la creación y la desaparción de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?**
 
-Se utilizan clases heredadas para crear diferentes tipos de partículas. Se utiliza el polimorfismo para crear las particulas normales y otras que le llaman confetti. Y 
+En cada fotograma, el método addParticle() del emisor (emitter) crea una nueva partícula en la posición especificada.
+Cada partícula es un objeto de la clase Particle, que se inicializa con una posición, aceleración, velocidad aleatoria, y una propiedad lifespan que define su tiempo de vida
+
+Cada partícula tiene una vida útil definida por la propiedad lifespan, que disminuye en cada fotograma (this.lifespan -= 2; en el método update()).
+En la clase Emitter, el método run() verifica si una partícula ha "muerto" con el método isDead(). Si lifespan es menor que 0, se considera que la partícula ha muerto.
+Las partículas muertas son eliminadas del array particles[] usando el método splice(), que borra objetos del array sin dejar residuos, liberando así la memoria utilizada por esas partículas.
+
+Se utilizan clases heredadas para crear diferentes tipos de partículas. Se utiliza el polimorfismo para crear las particulas normales y otras que le llaman confetti. La clase Confetti hereda de la clase Particle, lo que significa que sigue el mismo flujo de vida que las partículas normales: se crea en la misma posición inicial y tiene las mismas propiedades como posición, aceleración, velocidad, y tiempo de vida (lifespan).
 
 **- Explica qué concepto aplicaste, cómo lo aplicaste y por qué.**
 
+Ene sta simulacion aplique el concepto de levy flight. Utilice la distribución de Levy Flight para determinar cuándo aparecerá un confeti en lugar de un círculo.
+
+En lugar de generar partículas de manera completamente aleatoria, estamos usando una función especial que genera un número aleatorio con la distribución de Levy. Esta distribución tiene la característica de que genera muchos números pequeños y, de vez en cuando, números mucho más grandes.
+
+Usamos esta función para decidir cuándo generar un confeti (cuadrado) en lugar de una partícula normal (círculo). Como los números grandes son más raros en la distribución de Levy, eso significa que el confeti aparecerá con menos frecuencia que las partículas normales.
+
 **- Enlace a tu código en el editor de p5.js.**
+
+https://editor.p5js.org/salome2607/sketches/oNbG0Z-Sw
 
 **- El código de la simulacion.**
 
+```js
+let emitter;
+
+function setup() {
+  createCanvas(640, 240);
+  emitter = new Emitter(width / 2, 20);
+}
+
+function draw() {
+  background(255);
+  emitter.addParticle();
+  emitter.run();
+}
+
+// Emitter class manages all particles
+class Emitter {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.particles = [];
+  }
+
+  addParticle() {
+    // Use Levy Flight distribution to determine when to emit confetti
+    let randomChance = levyFlight();
+    if (randomChance > 10) {  // Condition based on Levy Flight value
+      this.particles.push(new Confetti(this.position.x, this.position.y));
+    } else {
+      this.particles.push(new Particle(this.position.x, this.position.y));
+    }
+  }
+
+  run() {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      let p = this.particles[i];
+      p.run();
+      if (p.isDead()) {
+        this.particles.splice(i, 1);  // Remove the particle if it is dead
+      }
+    }
+  }
+}
+
+// Particle class for basic particles
+class Particle {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.acceleration = createVector(0, 0);
+    this.velocity = createVector(random(-1, 1), random(-1, 0));
+    this.lifespan = 255.0;
+  }
+
+  run() {
+    let gravity = createVector(0, 0.05);
+    this.applyForce(gravity);
+    this.update();
+    this.show();
+  }
+
+  applyForce(force) {
+    this.acceleration.add(force);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2;
+    this.acceleration.mult(0);
+  }
+
+  show() {
+    stroke(0, this.lifespan);
+    strokeWeight(2);
+    fill(127, this.lifespan);
+    circle(this.position.x, this.position.y, 8);
+  }
+
+  isDead() {
+    return this.lifespan < 0.0;
+  }
+}
+
+// Confetti class inherits from Particle but has square shape
+class Confetti extends Particle {
+  constructor(x, y) {
+    super(x, y);  // Inherit position and other properties from Particle
+  }
+
+  // Display the confetti as a square, no Levy Flight movement
+  show() {
+    let angle = map(this.position.x, 0, width, 0, TWO_PI * 2);
+    rectMode(CENTER);
+    fill(127, this.lifespan);
+    stroke(0, this.lifespan);
+    strokeWeight(2);
+    push();
+    translate(this.position.x, this.position.y);
+    rotate(angle);
+    square(0, 0, 12);
+    pop();
+  }
+}
+
+// Function to generate a Levy Flight value for determining confetti creation
+function levyFlight() {
+  let beta = 1.5;  // Beta is a constant to control the distribution
+  return pow(random(1), -1 / beta);  // Using the inverse power law
+}
+```
+
 **- Captura de pantalla.**
+
+![Foto](../../../../assets/unidad5/act2-3.gif)
+
 
 ### **Simulacion #4**
 **- ¿Cómo se está gestionando la creación y la desaparción de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?**
 
+En el método addParticle() de la clase Emitter, se crean nuevas partículas continuamente durante la ejecución del programa.
+Cada vez que addParticle() es llamado, se crea una nueva instancia de la clase Particle y se agrega al arreglo this.particles
+
+Si una partícula ha "muerto" (es decir, su vida útil ha terminado), se elimina del arreglo utilizando splice()
+Este proceso asegura que las partículas que ya no son útiles (han agotado su lifespan) se eliminen del arreglo, lo que ayuda a gestionar la memoria, ya que evita que el programa siga almacenando partículas que ya no aparecen en pantalla.
+
 **- Explica qué concepto aplicaste, cómo lo aplicaste y por qué.**
+
+Aqui quise aplicar el concepto de fuerza del viento que afecte a las partículas cuando presionas el mouse. Este es un ejemplo de cómo usar fuerzas externas (como el viento) para influir en el movimiento de las partículas.
+
+- añadi una fuerza de viento que se active solo cuando el mouse esté presionado.
+- La fuerza del viento será un vector horizontal que empuje las partículas hacia la derecha cuando presiones el mouse.
+- se aplicara esa fuerza en el draw() para afectar a todas las partículas mientras el mouse esté presionado.
 
 **- Enlace a tu código en el editor de p5.js.**
 
+https://editor.p5js.org/salome2607/sketches/goHjSvNj7
+
 **- El código de la simulacion.**
 
+```js
+let emitter;
+
+function setup() {
+  createCanvas(1280, 480);
+  emitter = new Emitter(width / 2, 50);
+}
+
+function draw() {
+  background(255, 30);
+
+  // Aplicamos la fuerza de gravedad a todas las partículas
+  let gravity = createVector(0, 0.1);
+  emitter.applyForce(gravity);
+
+  // Si el mouse está presionado, aplicamos una fuerza de viento
+  if (mouseIsPressed) {
+    let wind = createVector(0.2, 0); // Viento hacia la derecha
+    emitter.applyForce(wind);
+  }
+
+  emitter.addParticle();
+  emitter.run();
+}
+
+class Particle {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.acceleration = createVector(0, 0.0);
+    this.velocity = createVector(random(-1, 1), random(-2, 0));
+    this.lifespan = 255.0;
+    this.mass = 1;
+  }
+
+  run() {
+    this.update();
+    this.show();
+  }
+
+  applyForce(force) {
+    let f = force.copy();
+    f.div(this.mass); // Aplicamos la fuerza de acuerdo con la masa
+    this.acceleration.add(f);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+    this.lifespan -= 2.0;
+  }
+
+  show() {
+    stroke(0, this.lifespan);
+    strokeWeight(2);
+    fill(127, this.lifespan);
+    circle(this.position.x, this.position.y, 8);
+  }
+
+  isDead() {
+    return this.lifespan < 0.0;
+  }
+}
+
+class Emitter {
+  constructor(x, y) {
+    this.origin = createVector(x, y);
+    this.particles = [];
+  }
+
+  addParticle() {
+    this.particles.push(new Particle(this.origin.x, this.origin.y));
+  }
+
+  applyForce(force) {
+    for (let particle of this.particles) {
+      particle.applyForce(force);
+    }
+  }
+
+  run() {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const particle = this.particles[i];
+      particle.run();
+      if (particle.isDead()) {
+        this.particles.splice(i, 1);
+      }
+    }
+  }
+}
+```
+
 **- Captura de pantalla.**
+
+![Foto](../../../../assets/unidad5/act3-4.gif)
 
 ### **Simulacion #5**
+
 **- ¿Cómo se está gestionando la creación y la desaparción de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?**
+
+Este código crea un sistema de partículas con un emisor que genera partículas y un repulsor que repele las partículas cercanas. El repulsor aplica una fuerza de repulsión basada en la distancia entre las partículas y su posición. Además, el sistema también tiene una fuerza de gravedad que afecta a todas las partículas.
+
+El objeto Emitter genera nuevas partículas en cada frame y aplica fuerzas como la gravedad o la fuerza del repulsor a cada una de ellas. También se encarga de eliminar las partículas cuando su vida útil llega a cero.
+
+El objeto Repeller genera una fuerza de repulsión que empuja las partículas lejos de su posición, simulando un campo de fuerza que las repele. La magnitud de esta fuerza depende de la distancia entre el repulsor y la partícula. Cuanto más cerca estén, mayor es la fuerza de repulsión.
 
 **- Explica qué concepto aplicaste, cómo lo aplicaste y por qué.**
 
+Voy a utilizar el motion 101 para que la bolita que es el repeller siga al mouse.
+
+Se añadieron propiedades de velocidad y aceleración al repeller. En el método update(), calculo la dirección desde la posición actual del repeller hacia el cursor del mouse. Este cálculo se hace usando p5.Vector.sub(), lo que crea un vector que apunta en esa dirección. Ajusto la magnitud del vector de dirección para controlar cuán rápido sigue el repeller al mouse. Uso esta dirección como la aceleración, que se suma a la velocidad. Luego, la velocidad se suma a la posición del repeller, lo que actualiza su ubicación en cada cuadro.
+
+
 **- Enlace a tu código en el editor de p5.js.**
+
+https://editor.p5js.org/salome2607/sketches/ZYbRDUzry
 
 **- El código de la simulacion.**
 
+```js
+let emitter;
+let repeller;
+
+function setup() {
+  createCanvas(640, 240);
+  emitter = new Emitter(width / 2, 60);
+  repeller = new Repeller(width / 2, 250);
+}
+
+function draw() {
+  background(255);
+
+  emitter.addParticle();
+
+  // Aplicamos la gravedad
+  let gravity = createVector(0, 0.1);
+  emitter.applyForce(gravity);
+
+  // Aplicamos el repulsor (que ahora sigue al mouse)
+  repeller.update();
+  emitter.applyRepeller(repeller);
+
+  emitter.run();
+
+  repeller.show();
+}
+
+class Particle {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.velocity = createVector(random(-1, 1), random(-1, 0));
+    this.acceleration = createVector(0, 0);
+    this.lifespan = 255.0;
+  }
+
+  run() {
+    this.update();
+    this.show();
+  }
+
+  applyForce(f) {
+    this.acceleration.add(f);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2;
+    this.acceleration.mult(0);
+  }
+
+  show() {
+    stroke(0, this.lifespan);
+    strokeWeight(2);
+    fill(127, this.lifespan);
+    circle(this.position.x, this.position.y, 8);
+  }
+
+  isDead() {
+    return this.lifespan < 0.0;
+  }
+}
+
+class Emitter {
+  constructor(x, y) {
+    this.origin = createVector(x, y);
+    this.particles = [];
+  }
+
+  addParticle() {
+    this.particles.push(new Particle(this.origin.x, this.origin.y));
+  }
+
+  applyForce(force) {
+    for (let particle of this.particles) {
+      particle.applyForce(force);
+    }
+  }
+
+  applyRepeller(repeller) {
+    for (let particle of this.particles) {
+      let force = repeller.repel(particle);
+      particle.applyForce(force);
+    }
+  }
+
+  run() {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const particle = this.particles[i];
+      particle.run();
+      if (particle.isDead()) {
+        this.particles.splice(i, 1);
+      }
+    }
+  }
+}
+
+class Repeller {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.velocity = createVector(0, 0); // Velocidad del repeller
+    this.acceleration = createVector(0, 0); // Aceleración del repeller
+    this.power = 150;
+  }
+
+  update() {
+    // Queremos que el repeller siga al mouse de forma suave
+    let mouse = createVector(mouseX, mouseY);
+    let dir = p5.Vector.sub(mouse, this.position);
+    dir.setMag(0.2); // Controlamos la velocidad a la que sigue al mouse
+
+    this.acceleration = dir; // Aceleración basada en la dirección al mouse
+    this.velocity.add(this.acceleration); // Actualizamos la velocidad
+    this.velocity.limit(5); // Limitamos la velocidad máxima
+    this.position.add(this.velocity); // Actualizamos la posición
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(127);
+    circle(this.position.x, this.position.y, 32);
+  }
+
+  repel(particle) {
+    let force = p5.Vector.sub(this.position, particle.position);
+    let distance = force.mag();
+    distance = constrain(distance, 5, 50);
+    let strength = (-1 * this.power) / (distance * distance);
+    force.setMag(strength);
+    return force;
+  }
+}
+```
+
 **- Captura de pantalla.**
+
+![Foto](../../../../assets/unidad5/act3-5.gif)
