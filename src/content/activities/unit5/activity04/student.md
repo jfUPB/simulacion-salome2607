@@ -12,3 +12,8 @@ las fuerzas externas se aplican principalmente en el ruido de Perlin y la fuerza
 El ruido genera una fuerza continua que varía de manera suave y afecta las partículas de forma no brusca y  actúa como una fuerza externa que cambia suavemente la trayectoria de las partículas.
 
 **4. ¿Cómo se aplicaste los conceptos de herencia y polimorfismo en los sistemas de partículas que trabajaste en la unidad?**
+
+La herencia se aplica al crear una clase base, que contiene las propiedades y métodos comunes para todas las partículas y luego cree subclases que son las de circulos y cuadrados y estas heredan de la clase base. Esto hace que ambas tengan el comportamiento básico de la clase base pero que se puedan cambiar aspectos específicos como la forma.
+
+El polimorfismo se aplica cuando se sobrescribi el método display() en cada una de las subclases para que se dibuje la forma que es.
+
