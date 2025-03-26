@@ -23,117 +23,104 @@ https://editor.p5js.org/salome2607/sketches/bIsRsAJgw
 
 ```js
 let particles = [];
-let attractor;
-let particleColor;
-let t = 0; // Tiempo para el ruido de Perlin
+let trianglePos;
 
 function setup() {
   createCanvas(600, 600);
-  particleColor = color(255, 255, 255);
-  attractor = new Attractor(width / 2, height / 2);
+  trianglePos = createVector(width / 2, height / 2);
+  angleMode(DEGREES);
 }
 
 function draw() {
-  background(30);
+  background(0);
   
-  attractor.update();
-  attractor.show();
-  
-  // Emitir nuevas partículas
-  for (let i = 0; i < 2; i++) {
-    particles.push(new Particle(attractor.pos.x, attractor.pos.y, particleColor));
-  }
+  // Actualizar la posición del triángulo siguiendo el mouse pero con retraso
+  trianglePos.x = lerp(trianglePos.x, mouseX, 0.05);
+  trianglePos.y = lerp(trianglePos.y, mouseY, 0.05);
 
-  // Actualizar y mostrar partículas
+  // Dibujar el triángulo
+  drawRotatingTriangle();
+
+  // Crear nuevas partículas
+  let p;
+  if (random(1) > 0.5) {
+    p = new CircleParticle(trianglePos.x, trianglePos.y);
+  } else {
+    p = new SquareParticle(trianglePos.x, trianglePos.y);
+  }
+  particles.push(p);
+
+  // Actualizar y mostrar las partículas
   for (let i = particles.length - 1; i >= 0; i--) {
-    particles[i].update();
-    particles[i].show();
-    if (particles[i].isDead()) {
+    let particle = particles[i];
+    particle.update();
+    particle.display();
+    
+    // Eliminar las partículas cuando su vida útil se acabe
+    if (particle.isDead()) {
       particles.splice(i, 1);
     }
   }
 }
 
-function mousePressed() {
-  particleColor = color(random(255), random(255), random(255));
+function drawRotatingTriangle() {
+  let angleToMouse = atan2(mouseY - trianglePos.y, mouseX - trianglePos.x);
+  push();
+  translate(trianglePos.x, trianglePos.y);
+  rotate(angleToMouse);
+  fill(255);
+  noStroke();
+  triangle(0, -20, -15, 20, 15, 20);
+  pop();
 }
 
-// Clase para el triángulo (attractor)
-class Attractor {
+// Clase base Particle
+class Particle {
   constructor(x, y) {
     this.pos = createVector(x, y);
-    this.vel = createVector(0, 0);
-    this.acc = createVector(0, 0);
-    this.angle = 0;
-  }
-
-  update() {
-    // El triángulo sigue el mouse
-    let target = createVector(mouseX, mouseY);
-    let dir = p5.Vector.sub(target, this.pos);
-    
-    dir.setMag(0.1); // Magnitud del movimiento
-    this.vel.add(dir);
-    this.vel.limit(4); // Limitar la velocidad máxima
-    this.pos.add(this.vel);
-
-    // Actualizar el ángulo para que apunte a la dirección del movimiento
-    this.angle = atan2(this.vel.y, this.vel.x);
-  }
-
-  show() {
-    push();
-    translate(this.pos.x, this.pos.y);
-    rotate(this.angle);
-    
-    // Dibujar triángulo
-    fill(255);
-    stroke(255);
-    strokeWeight(2);
-    beginShape();
-    vertex(-15, 10); // Base izquierda
-    vertex(15, 0);   // Punta del triángulo
-    vertex(-15, -10); // Base derecha
-    endShape(CLOSE);
-    
-    pop();
-  }
-}
-
-// Clase de partículas
-class Particle {
-  constructor(x, y, color) {
-    this.pos = createVector(x, y);
-    this.vel = createVector(0, 0); // No movimiento inicial
+    this.vel = p5.Vector.random2D().mult(random(0.5, 2));
     this.acc = createVector(0, 0);
     this.lifespan = 255;
-    this.color = color;
-    this.tOffset = random(1000); // Offset aleatorio para el ruido de Perlin
   }
 
   update() {
-    // Movimiento basado en ruido de Perlin
-    let noiseX = map(noise(this.tOffset + t), 0, 1, -2, 2);
-    let noiseY = map(noise(this.tOffset + t + 1000), 0, 1, -2, 2);
-    let noiseVel = createVector(noiseX, noiseY);
+    // Añadir ruido de Perlin para que las partículas se muevan orgánicamente
+    let noiseX = map(noise(this.pos.x * 0.01, frameCount * 0.01), 0, 1, -0.5, 0.5);
+    let noiseY = map(noise(this.pos.y * 0.01, frameCount * 0.01), 0, 1, -0.5, 0.5);
+    let noiseVector = createVector(noiseX, noiseY);
+    this.vel.add(noiseVector);
 
-    this.vel.add(noiseVel);
+    this.vel.add(this.acc);
     this.pos.add(this.vel);
-    
     this.lifespan -= 2;
-    
-    // Incrementar el tiempo para el ruido de Perlin
-    t += 0.01;
-  }
-
-  show() {
-    noStroke();
-    fill(red(this.color), green(this.color), blue(this.color), this.lifespan);
-    ellipse(this.pos.x, this.pos.y, 8);
   }
 
   isDead() {
-    return this.lifespan < 0;
+    return this.lifespan <= 0;
+  }
+  
+  // Método display para sobrescribir en clases hijas
+  display() {
+    // Será sobrescrito por las subclases
+  }
+}
+
+// Partícula circular
+class CircleParticle extends Particle {
+  display() {
+    fill(255, this.lifespan);
+    noStroke();
+    ellipse(this.pos.x, this.pos.y, 10);
+  }
+}
+
+// Partícula cuadrada
+class SquareParticle extends Particle {
+  display() {
+    fill(255, 0, 0, this.lifespan);  // Las partículas cuadradas son rojas
+    noStroke();
+    rectMode(CENTER);
+    rect(this.pos.x, this.pos.y, 10, 10);
   }
 }
 ```
