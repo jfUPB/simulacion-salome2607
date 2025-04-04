@@ -162,7 +162,15 @@ this.maxforce = 0.05; // Maximum steering force
 ```
 
 **5. Experimenta con modificaciones: realiza al menos una de las siguientes modificaciones en el código, ejecuta y describe el efecto observado en el comportamiento colectivo del enjambre:**
-**- Cambia drásticamente el peso de una de las reglas (ej: pon la cohesión a cero, o la separación muy alta).**
-**- Modifica significativamente el radio de percepción (hazlo muy pequeño o muy grande).**
-**- Introduce un objetivo (target) que todos los boids intenten seguir (usando una fuerza de seek) además de las reglas de flocking, y ajusta su influencia.**
 **Describe la modificación que realizaste al código y explica detalladamente el efecto que tuvo en el comportamiento colectivo del enjambre (¿se dispersan? ¿forman grupos compactos? ¿se mueven caóticamente?). Incluye una captura de pantalla o GIF si ilustra bien el cambio. Muestra el fragmento de código modificado.**
+
+**- Cambia drásticamente el peso de una de las reglas (ej: pon la cohesión a cero, o la separación muy alta).**
+
+Si aumento la separacion los boids no se juntan tanto, se dispersan más y no hacen formaciones apretadas.
+
+**- Modifica significativamente el radio de percepción (hazlo muy pequeño o muy grande).**
+
+
+**- Introduce un objetivo (target) que todos los boids intenten seguir (usando una fuerza de seek) además de las reglas de flocking, y ajusta su influencia.**
+
+
