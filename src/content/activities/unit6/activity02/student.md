@@ -58,9 +58,15 @@ Una vez que el agente obtiene el vector del flujo, lo utiliza para calcular su n
  
 Si modifico la resolucion del campo se cambia el tamaño de cada celda. Por ejemplo puse la resolucion en 5 ``` flowfield = new FlowField(5);``` y los agentes siguen un campo con cambios más detallados y precisos, generando movimientos más pequeños. 
 
-![image](https://github.com/user-attachments/assets/bbb17747-dd65-426b-85d0-c11dcef76f3b)
+https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTcwczRyYWFxcHYyb3NmZ256cGIya3pyczFkbXp2YWM0eTUyZm9zcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YKdnNMnkdTBgaaT9Zx/giphy.gif
 
 Si le modifico el maxspeed a los agentes se mueven mas rapido o mas lento. por ejemplo la puse en 8 ```this.maxspeed = 8;``` y se movian mas rapido. Y pues si la pongo mas bajita por ejemplo en 2 se mueven mucho mas lento.
 
+https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzRubXRieGpzcGNuNW02NWQwdmN1eTJoaXR5YXhlbnllMXA0MjAzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TQ7eboahMJISVNy5jf/giphy.gif
+
+https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnZndmRrNDdncHFuazNvY280cWRtb2YwZ3hrdmkxeG9lOTloc3BpbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HzEvRpRB6Z1zIwEtXv/giphy.gif
+
 Si le modifico el maxforce a los agentes el movimiento de cambio de direccion se vuelve mas brusco o mas fluido. por ejemplo si la cambio a 2 se vuelven mas brusco ```this.maxforce = 2;``` y si la pongo mas bajita los movimientos son mas fluidos ```this.maxforce = 0.5;```
+
+https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmNoaHQ0Z2dydjNqbXh5bzZhamxpam5rem12dXV1NWppYnpxdzM3OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DmwkYQdfN6OEVGukrn/giphy.gif
 
