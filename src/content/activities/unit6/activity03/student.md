@@ -166,11 +166,21 @@ this.maxforce = 0.05; // Maximum steering force
 
 **- Cambia drásticamente el peso de una de las reglas (ej: pon la cohesión a cero, o la separación muy alta).**
 
-Si aumento la separacion los boids no se juntan tanto, se dispersan más y no hacen formaciones apretadas.
+Si aumento la separacion los boids no se juntan tanto, se dispersan más y no hacen formaciones apretadas. por ejemplo la aumente de 1.5 a 4 ```sep.mult(4);```
+
+https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDNxaGMwMHo2YTZvOXBwNHp4ZHZrdThvZnNqYzl0YmxzcmRtOGdldyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IAIj8sLYa6RsTuIEf5/giphy.gif
 
 **- Modifica significativamente el radio de percepción (hazlo muy pequeño o muy grande).**
 
+Reduje el radio de separacion, lo puse en 5 ```let desiredSeparation = 5;```. Cuando hice esto, los boids estan mucho mas cercanos, se mueven casi que uno encima del otro. 
+
+https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcm5paTFrcmt2dGE3bzN0ZGVtN3Fxb3p5aWphejg4b29jbndjdnp6ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kF5iYbakywcEs1df2b/giphy.gif
+
+Si le reduzco la let neighborDistance en alineacion los boids no se mueven tan dispersos, o sea no se alejan tanto. se lo puse en 5 ```let neighborDistance = 5;```.
+
+https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExajZ4ZWp4ODVncmVhd2ZnNnhteXk1NzdlYjRqN2M2OTd4bm9ibW4yZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Sn6JDBssPCfO21YnNM/giphy.gif
 
 **- Introduce un objetivo (target) que todos los boids intenten seguir (usando una fuerza de seek) además de las reglas de flocking, y ajusta su influencia.**
 
+no me funciona :(
 
