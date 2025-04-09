@@ -1,10 +1,10 @@
 **Diferencias fundamentales: ¿Cuál dirías que es la diferencia principal en cómo Flow Fields y Flocking logran el movimiento coordinado o dirigido de los agentes? (piensa en dónde reside la “inteligencia” o las reglas: ¿En el entorno o en las interacciones entre agentes?).**
 
-En Flow Fields, la inteligencia está en el entorno: un campo vectorial invisible guía el movimiento de cada agente según su posición
-Los agentes simplemente “leen” el vector que les corresponde en el campo y lo siguen.
+En Flow Fields, la inteligencia está en el entorno, en un campo invisible que guía el movimiento de cada agente según su posición
+Los agentes simplemente leen el vector que les corresponde en el campo y lo siguen.
 
-En Flocking, la inteligencia está en las interacciones locales entre agentes. 
-Cada agente toma decisiones con base en sus vecinos: se separa de los que están muy cerca, se alinea con los que van en la misma dirección y se agrupa con los que están a cierta distancia.
+En Flocking, la inteligencia está en las interacciones entre los agentes. 
+Cada agente toma decisiones con base en sus vecinos, se separa de los que están muy cerca, se alinea con los que van en la misma dirección y se agrupa con los que están a cierta distancia.
 
 Es como la diferencia entre seguir las corrientes de un río (Flow Fields) versus un grupo de peces coordinándose entre sí (Flocking).
 
@@ -26,7 +26,7 @@ En Flow Fields, los agentes demuestran autonomía limitada (siguen reglas simple
 
 **Emergencia: ¿En qué momento observaste “comportamiento emergente” (complejidad o patrones no programados explícitamente) al trabajar con estos algoritmos?**
 
- 
- 
- noté que cuando mezclaba emociones distintas, surgían áreas del canvas donde predominaba una emoción, generando algo parecido a “zonas mentales” con distintos estados anímicos. Este
+noté en mi codigo que cuando mezclaba emociones distintas, surgían áreas del canvas donde predominaba una emoción. También cuando agregaba nuevos boids, todo el grupo se ajustaba automáticamente, lo cual me pareció muy interesante. tambien cuando los agentes forman acumulaciones en áreas de baja velocidad. 
+
+
 
