@@ -20,4 +20,9 @@ Aqui representa la salida como la X corriendo hacia la salida que es la I. Utili
 
 **Genera tus propias ideas (estáticas): elige 2-3 palabras diferentes. Para cada una, piensa y describe (o haz un boceto muy simple) cómo podrías representarla visualmente siguiendo el concepto “Word as Image”, sin pensar aún en animación o física. ¿Cómo alterarías las letras o la composición para evocar el significado?**
 
-la palabra grow o crecer. que cada palabra sea mas grande 
+- grow o crecer. que cada letra sea mas grande que la anterior.
+- sleep o dormir. que cada letra se vaya inclinando hasta que la ultima este "acostada"
+- niebla. como si tuvieran una niebla encima hay unas que parecen desvanecidas
+- musica. que las letras esten puestas como notas musicales en una partitura, como en las lineas que tiene una partitura
+
+
