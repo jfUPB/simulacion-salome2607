@@ -18,7 +18,7 @@ la frecuencia
 mouse 
 - cantidad de particulas con el scroll 
 - destellos de particulas doradas con el clic
-- barra espaceadora baja el volumen de la musica y las particulas se desvanecen mas rapido
+- barra espaceadora baja el volumen de la musica temporalmente y las particulas se desvanecen mas rapido
 
 - **Asegúrate de que tu diseño incluya elementos generativos que hagan que la visualización no sea idéntica cada vez, incluso con la misma música (ej: uso de aleatoriedad controlada, ruido, condiciones iniciales variables).**
 
@@ -30,9 +30,20 @@ mouse
 - **¿Qué elementos visuales específicos se generarán? (partículas, líneas, formas, colores, texturas…).**
 - **¿Qué propiedades de estos elementos serán controladas dinámicamente por el proceso generativo (y, por ende, por los inputs)? (posición, tamaño, color, opacidad, velocidad, conexión, etc.).**
 
-Lineas y particulas que dejan un rastro. las prpiedades que seran controladas son la velocidad, color, opacidad, cantidad
+Partículas que se mueven suavemente por el campo. Líneas o estelas que dejan las partículas al moverse, como si dibujaran memorias o emociones en el aire. Destellos dorados efímeros al hacer clic. las propiedades que seran controladas son la velocidad, color, opacidad, cantidad
 
 **Documenta el diseño: describe tu algoritmo (proceso) y los visuales resultantes (outputs) de forma clara. Puedes usar:**
 - **Texto detallado.**
 - **Pseudocódigo para la lógica clave.**
 - **Diagramas de flujo o conceptuales que muestren cómo los inputs afectan al proceso y éste a los outputs.**
+
+- Se genera un flow field con ruido Perlin que cambia según el volumen.
+- Desde un centro invisible, nacen partículas con dirección definida por el campo.
+- Cada partícula:
+  - Tiene una velocidad y color determinadas por las frecuencias.
+  - Cambia de opacidad según la amplitud.
+  - Se desvanece al final de su vida útil (aleatoria).
+- El usuario puede:
+  - Aumentar/disminuir la canitidad de particulas con scroll.
+  - Generar chispas doradas al hacer clic.
+  - "Silenciar el corazón" con la barra espaciadora, provocando desvanecimiento rápido.
