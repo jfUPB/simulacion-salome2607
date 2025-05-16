@@ -74,13 +74,14 @@ function keyPressed() {
 
 se ajusta la resolucion del flow field segun la amplitud
 
-´´´js
-// Ajustamos la complejidad del campo según la amplitud de los bajos y agudos
-  let fieldResolution = map(bass + treble, 0, 510, 0.05, 0.2); // mayor volumen = campo más complejo
-```
+´´´// Ajustamos la complejidad del campo según la amplitud de los bajos y agudos
+  let fieldResolution = map(bass + treble, 0, 510, 0.05, 0.2); // mayor volumen = campo más complejo```
 
 
 **Incluye el código completo de tu sketch final (o enlace a repositorio).**
+
+https://editor.p5js.org/salome2607/full/k4fbHzgpE 
+
 
 ```js
 let song;
